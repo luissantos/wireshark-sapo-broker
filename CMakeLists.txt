@@ -51,6 +51,11 @@ SET(GLIB2_INCLUDE_DIRS $ENV{WIRESHARK_INCLUDE_DIRS})
 ENDIF()
 include_directories (${WIRESHARK_INCLUDE_DIRS})
 
+
+include_directories (/usr/include/apr-1.0)
+
+
+
 set(LINK_MODE_LIB SHARED)
 set(LINK_MODE_MODULE MODULE)
 
@@ -90,10 +95,11 @@ set_target_properties(broker PROPERTIES PREFIX "")
 set_target_properties(broker PROPERTIES LINK_FLAGS "${WS_LINK_FLAGS}")
 
 IF(DEFINED MANUAL_LINK)
-target_link_libraries(broker)
+target_link_libraries(broker jansson apr-1)
 ELSE()
-target_link_libraries(broker)
+target_link_libraries(broker jansson apr-1)
 ENDIF()
+
 
 install(TARGETS broker
 	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/plugins NAMELINK_SKIP
