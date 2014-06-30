@@ -7,6 +7,7 @@
 #include "broker.h"
 #include <config.h>
 #include <epan/packet.h>
+#include <glib-2.0/glib/gtypes.h>
 #include <jansson.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -122,6 +123,7 @@ static void dissect_broker(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree)
         char* type = broker_get_action_type_name(message->action_type);
 
         proto_tree_add_text(broker_tree,tvb,8,len, type);
+
     }
 
 

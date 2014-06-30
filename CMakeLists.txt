@@ -20,12 +20,24 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
+IF(DEFINED CMAKE_BUILD_TYPE)
+   SET(CMAKE_BUILD_TYPE ${CMAKE_BUILD_TYPE} CACHE STRING "Choose the type of
+build, options are: None(CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) Debug
+Release RelWithDebInfo MinSizeRel.")
+ELSE()
+   SET(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build,
+options are: None(CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) Debug Release
+RelWithDebInfo MinSizeRel.")
+ENDIF()
+
 
 project(broker C)
-
 cmake_minimum_required(VERSION 2.6)
 set(CMAKE_BACKWARDS_COMPATIBILITY 2.6)
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+
+set(CMAKE_C_FLAGS_DEBUG "-g -ggdb")
+
 IF(EXISTS /usr/lib/wireshark/libwireshark1/plugins/)
 set(CMAKE_INSTALL_LIBDIR /usr/lib/wireshark/libwireshark1/plugins/)
 ELSE()
@@ -105,18 +117,18 @@ install(TARGETS broker
 	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/plugins NAMELINK_SKIP
 )
 
-IF(DEFINED GNU_HOST)
- CMAKE_FORCE_C_COMPILER(  ${GNU_HOST}-gcc GNU)
- set(CMAKE_STRIP "${GNU_HOST}-strip")
-ENDIF()
+#IF(DEFINED GNU_HOST)
+# CMAKE_FORCE_C_COMPILER(  ${GNU_HOST}-gcc GNU)
+# set(CMAKE_STRIP "${GNU_HOST}-strip")
+#ENDIF()
 
 IF(DEFINED STATIC_GCC_BUILD)
  set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -static-libgcc")
 ENDIF()
 
-add_custom_command(TARGET broker
- POST_BUILD
- COMMAND ${CMAKE_STRIP} --strip-debug --strip-unneeded broker.so
-)
+#add_custom_command(TARGET broker
+# POST_BUILD
+# COMMAND ${CMAKE_STRIP} --strip-debug --strip-unneeded broker.so
+#)
 
 
