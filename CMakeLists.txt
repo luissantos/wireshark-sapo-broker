@@ -65,6 +65,8 @@ include_directories (${WIRESHARK_INCLUDE_DIRS})
 
 
 include_directories (/usr/include/apr-1.0)
+include_directories (/usr/include/libxml2)
+
 
 
 
@@ -107,9 +109,9 @@ set_target_properties(broker PROPERTIES PREFIX "")
 set_target_properties(broker PROPERTIES LINK_FLAGS "${WS_LINK_FLAGS}")
 
 IF(DEFINED MANUAL_LINK)
-target_link_libraries(broker jansson apr-1)
+target_link_libraries(broker jansson apr-1 xml2)
 ELSE()
-target_link_libraries(broker jansson apr-1)
+target_link_libraries(broker jansson apr-1 xml2)
 ENDIF()
 
 
